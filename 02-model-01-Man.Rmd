@@ -1,0 +1,38 @@
+## Manchester United
+
+## Case 1: Man United
+
+In this section, we focus on building the estimation model for **Manchester United**. 
+
+
+### Model Result
+
+```{r subset-data, echo = FALSE}
+set.seed(1234)
+MU.training = training.df[training.df$team_long_name == "Manchester United", ]
+MU.testing = test.df[test.df$team_long_name == "Manchester United", ]
+```
+
+```{r MU-training, echo = FALSE, results = FALSE}
+MU.res = training(MU.training)
+
+cat("The coefficients of this model are:\n")
+print(MU.res$coefs)
+
+```
+
+The 10-fold cross validation from LASSO algorithm shows that 
+
+$$ \text{score}(\text{draw}) = 0.0086 * \text{home game} $$
+$$ \text{score}(\text{loss}) = 0.0052 * \text{team crosses} - 0.0090 * \text{opponent crosses} $$
+
+$$ \text{score}(\text{win}) = -0.040 * \text{team fouls} - 0.0046 * \text{team crosses} + 0.036 * \text{team possession} - 0.5123 * \text{home game} $$
+
+```{r MU-test, echo = FALSE}
+MU.test.res = testing(MU.testing, MU.res$glmnet.res, lambda = 0.07)
+
+MU.error = MU.test.res$error
+MU.error.pct = (1 - sum(MU.error) / nrow(MU.testing)) * 100
+```
+
+Using penalized hyperparameter $\lambda= 0.07$, we get the that the model is `r round(MU.error.pct, 1)`\% correct.

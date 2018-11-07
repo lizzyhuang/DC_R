@@ -1,0 +1,41 @@
+# Data {#data}
+
+Assuming that part of the data extraction coding has been completed, we start directly with the data analysis part. 
+
+In this example, We use the **Match**, **Team** data sets from the **Kaggle European Soccer Database** to estimate the likelihood of winning, losing and getting a draw of a soccer game based on several related variables. There are in total 608 games in 8 seasons, with 304 home games and 304 away games.
+
+## Variables Summary
+
+In this model, we use the following variables extracted from the **match events**
+
+
+Variables | Definitions |
+--------------------------------------------|----------------------------------------------------|
+`match id` | unique ID for every match |
+`team_long_name` | the name of the team |
+`season`   | match season, from 2008/2009 to 2015/2016 |
+`team_goal` | the number of goals the team scored in the match |
+`opponent_goal` | the number of goals the opponent team scored in the match|
+`game_type` | identify whether it's a home game or an away game |
+`result` | match results, either win, loss, or draw |
+`team_foul`, `opponent foul` | the number of fouls the team / opponent team committed in the match |
+`team_rcard`, `team_ycard`, `opponent_rcard`, `opponent_ycard` | the numbers of red/yellow cards that the team/opponent team received |
+`team_cross`, `opponent_cross` | the number of crosses of the team / opponent team made |
+`team_corner`, `opponent_corner` | the number of corners the team / opponent team received |
+`team_shotoff`, `opponent_shotoff` | the number of shot-offs the team / opponent team made |
+`team_shoton`, `opponent_shoton` | the number of shot-ons the team / opponent team made |
+`team_pos`, `opponent_pos` | the percentage of possession the team / opponent team had. The two adds up to be 100 |
+
+
+We summarise the distributions of some of the important variables, such as `team_shoton` and `team_pos`
+
+```{r plot-team_shoton, echo = FALSE, message = FALSE, fig.height = 4}
+ggplot(data = game) + 
+  geom_histogram(aes(x = team_shoton)) + xlab("Number of shot-ons") + 
+  ggtitle("Distribution of Shot-ons")
+```
+
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro).
+
+

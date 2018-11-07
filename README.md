@@ -1,3 +1,1 @@
-# DC_R
-### This is a demo for my 2018 DC R Conference talk:
-*Let's Git'R Marked Down: Streamline Model Development Using R Markdown*
+This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.

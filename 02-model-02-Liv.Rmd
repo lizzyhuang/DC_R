@@ -1,0 +1,40 @@
+## Liverpool
+
+## Case 2: Liverpool
+
+In this section, we focus on building the estimation model for **Liverpool**. 
+
+
+### Model Result
+
+```{r subset-KOP-data, echo = FALSE}
+set.seed(1234)
+KOP.training = training.df[training.df$team_long_name == "Liverpool", ]
+KOP.testing = test.df[test.df$team_long_name == "Liverpool", ]
+```
+
+```{r KOP-training, echo = FALSE, results = FALSE}
+KOP.res = training(KOP.training)
+
+cat("The coefficients of this model are:\n")
+print(KOP.res$coefs)
+
+```
+
+The 10-fold cross validation from LASSO algorithm shows that 
+
+$$ \text{score}(\text{draw}) = 0.011 * \text{team cross} - 0.009 * \text{opponent shoton} - 0.006 * \text{team possession} - 0.077 * \text{away game} $$
+$$ \text{score}(\text{loss}) = 0.010 * \text{team cross} + 0.005 * \text{opponent shoton} - 0.010 * \text{team possession} + 0.304 * \text{away game} $$
+
+$$ \text{score}(\text{win}) = -0.021 * \text{team cross} + 0.004 * \text{opponent shoton} + 0.016 * \text{team possession} - 0.227 * \text{away game} $$
+
+```{r KOP-test, echo = FALSE, results=FALSE}
+lambda = 0.0967407
+KOP.test.res = testing(KOP.testing, KOP.res$glmnet.res, lambda = lambda)
+
+KOP.error = KOP.test.res$error
+KOP.error.pct = (1 - sum(KOP.error) / nrow(KOP.testing)) * 100
+```
+
+Using penalized hyperparameter $\lambda=$ `r lambda`, we get the that the model is `r round(MU.error.pct, 1)`\% correct.
+
