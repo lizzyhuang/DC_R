@@ -1,5 +1,12 @@
 # Model
 
+```{r load-model-code, echo = FALSE}
+## load model package
+source("package.R")
+```
+
+## Methodology
+
 We use the multinomial logistic regression model for estimation. The response variable `result` has 3 levels: win, loss, and draw. We use 
 
 * `game_type`, 
@@ -10,22 +17,4 @@ We use the multinomial logistic regression model for estimation. The response va
 
 as the explanatory variables to predict the results. 
 
-Here we select seasons 2008/2009 - 2014/2015 as the training data, and the last season 2015/2016 as the testing data. 
-
 To avoid overfitting, we apply the penalized LASSO model with hyperparameter `lambda` ($\lambda$).
-
-```{r ignore-missing, echo = FALSE}
-missing = sum(!complete.cases(game))
-game_clean = game[complete.cases(game), ]
-
-train.seasons = c("2008/2009", "2009/2010", "2010/2011", "2011/2012", "2012/2013", "2013/2014", "2014/2015")
-
-training.df = game_clean[game_clean$season %in% train.seasons, ]
-test.df = game_clean[!(game_clean$season %in% train.seasons), ]
-
-training.num = nrow(training.df)
-test.num = nrow(test.df)
-```
-
-
-We also ignore records with missing values. There are `r missing` records with missing values on the inputs. This leaves us 514 records in the training data set, and 72 records in the test data set.

@@ -1,6 +1,4 @@
-## Manchester United
-
-## Case 1: Man United
+## Case 1: Manchester United
 
 In this section, we focus on building the estimation model for **Manchester United**. 
 
@@ -23,10 +21,10 @@ print(MU.res$coefs)
 
 The 10-fold cross validation from LASSO algorithm shows that 
 
-$$ \text{score}(\text{draw}) = 0.0086 * \text{home game} $$
+$$ \text{score}(\text{draw}) = 0.0086 * \text{away game} $$
 $$ \text{score}(\text{loss}) = 0.0052 * \text{team crosses} - 0.0090 * \text{opponent crosses} $$
 
-$$ \text{score}(\text{win}) = -0.040 * \text{team fouls} - 0.0046 * \text{team crosses} + 0.036 * \text{team possession} - 0.5123 * \text{home game} $$
+$$ \text{score}(\text{win}) = -0.040 * \text{team fouls} - 0.0046 * \text{team crosses} + 0.036 * \text{team possession} - 0.5123 * \text{away game} $$
 
 ```{r MU-test, echo = FALSE}
 MU.test.res = testing(MU.testing, MU.res$glmnet.res, lambda = 0.07)

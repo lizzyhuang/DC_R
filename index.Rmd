@@ -11,15 +11,12 @@ link-citations: yes
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
-```{r load-libraries-n-data, echo = F, warning=F, message=F}
+```{r load-libraries, echo = F, warning=F, message=F}
 ## load libraries
 library(dplyr)
 library(ggplot2)
 library(glmnet)
-source("package.R")
 
-## load data
-game = get(load("game.Rdata"))
 ```
 
 ```{r include=FALSE}
@@ -32,5 +29,5 @@ knitr::write_bib(c(
 
 # Introduction
 
-This is a demo about how to streamline model development process with synchronized documentation using **R Markdown**. Here we only show a sample procedure where we have a general logistic regression model that will apply to 2 different subsets of the data, corresponding to 2 different "products". The ability of **bookdown** using separate `.Rmd` files for different sections of the documentation provides more flexibility for collaboration.
+This is a demo about how to streamline model development process with synchronized documentation using **R Markdown**. Here we only show a sample process where we have a general logistic regression model that will apply to 2 different subgroups of the data, corresponding to 2 different "products". The ability of **bookdown** using separate `.Rmd` files for different sections of the documentation provides more flexibility for collaboration.
 

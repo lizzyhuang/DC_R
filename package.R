@@ -4,7 +4,7 @@ training = function(training.df) {
   game_type_bin = model.matrix(training.df$result ~ training.df$game_type)[, -1]
   xMatrix = as.matrix(data.frame(training.df[, c("team_foul", "opponent_foul", "team_corner", "opponent_corner", "team_cross", "opponent_cross", "team_shoton", "opponent_shoton", "team_shotoff", "opponent_shotoff", "team_pos", "opponent_pos")], game_type_bin))
   glmnet.res = cv.glmnet(xMatrix, y = as.factor(training.df$result), alpha = 1,
-                      family = "multinomial",type.multinomial = "grouped", intercept = FALSE)
+                      family = "multinomial", intercept = FALSE)
   
   return (list(glmnet.res = glmnet.res, coefs = coef(glmnet.res), best.lambda = glmnet.res$lambda.1se))
 }

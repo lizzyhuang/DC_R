@@ -1,8 +1,14 @@
-# Data {#data}
+# Data
 
-Assuming that part of the data extraction coding has been completed, we start directly with the data analysis part. 
+```{r load-data, echo = FALSE}
+## load data
+game = get(load("game.Rdata"))
+```
 
-In this example, We use the **Match**, **Team** data sets from the **Kaggle European Soccer Database** to estimate the likelihood of winning, losing and getting a draw of a soccer game based on several related variables. There are in total 608 games in 8 seasons, with 304 home games and 304 away games.
+
+Assuming that part of the data extraction part has been completed, we start directly with the data analysis part.
+
+In this example, we use the data sets from the [**Kaggle European Soccer Database**](https://www.kaggle.com/hugomathien/soccer) to estimate the likelihood of winning, losing and getting a draw of soccer games in the Premier League based on several related variables. There are in total 608 games in 8 seasons, with 304 home games and 304 away games. The data set has been pre-processed for this demo.
 
 ## Variables Summary
 
@@ -27,15 +33,42 @@ Variables | Definitions |
 `team_pos`, `opponent_pos` | the percentage of possession the team / opponent team had. The two adds up to be 100 |
 
 
-We summarise the distributions of some of the important variables, such as `team_shoton` and `team_pos`
+## Training Data and Testing Data
+
+
+```{r ignore-missing, echo = FALSE}
+missing = sum(!complete.cases(game))
+game_clean = game[complete.cases(game), ]
+
+train.seasons = c("2008/2009", "2009/2010", "2010/2011", "2011/2012", "2012/2013", "2013/2014", "2014/2015")
+
+training.df = game_clean[game_clean$season %in% train.seasons, ]
+test.df = game_clean[!(game_clean$season %in% train.seasons), ]
+
+training.num = nrow(training.df)
+test.num = nrow(test.df)
+```
+
+We select seasons 2008/2009 - 2014/2015 as the training data, and the last season 2015/2016 as the testing data. We exclude observations which have missing values in one or more columns. This leaves us `r training.num` games in the training set and `r test.num` games in the testing set.
+
+### Input Variable Analysis
+
+Here, we summarise the distributions of some of the input variables from the training data set, say, the distribution of `team_shoton` based on the results.
 
 ```{r plot-team_shoton, echo = FALSE, message = FALSE, fig.height = 4}
-ggplot(data = game) + 
-  geom_histogram(aes(x = team_shoton)) + xlab("Number of shot-ons") + 
+ggplot(data = training.df) + 
+  geom_histogram(aes(x = team_shoton)) + facet_wrap(~result) + xlab("Number of shot-ons") + 
   ggtitle("Distribution of Shot-ons")
 ```
 
+### Output Variable - `result`
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro).
+We show the counts of the 3 results: draw, loss, win. 
+
+```{r echo = FALSE}
+ggplot(data = training.df) + geom_bar(aes(x = result)) + 
+  ggtitle("Numbers of game results")
+```
+
 
 
