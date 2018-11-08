@@ -16,10 +16,10 @@ description: "This is a minimal example of using the bookdown package to write a
 library(dplyr)
 library(ggplot2)
 library(glmnet)
-source("C:/demo/package.R")
+source("package.R")
 
 ## load data
-game = get(load("C:/demo/game.Rdata"))
+game = get(load("game.Rdata"))
 ```
 
 ```{r include=FALSE}
